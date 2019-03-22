@@ -91,26 +91,20 @@ public class Employe {
         int nbJoursAnnee = date.isLeapYear() ? 366 : 365;
         
         // Ne pas oublier les breaks dans les bloc switch, et éviter les if en ligne
-        int nbJoursWeekend = 104;
+        // Ajout d'une condition default pour éviter un code smell
+        int nbJoursWeekend;
         switch (LocalDate.of(date.getYear(),1,1).getDayOfWeek()){
             case FRIDAY: 
-            	if(date.isLeapYear()) {
-            		nbJoursWeekend =  nbJoursWeekend + 1;
-            	}
+            	nbJoursWeekend = date.isLeapYear() ? 105 : 104;
             	break;
             case SATURDAY:
-            	if(date.isLeapYear()) {
-            		nbJoursWeekend =  nbJoursWeekend + 2;
-            	}
-            	else {
-            		nbJoursWeekend =  nbJoursWeekend + 1;
-            	}
+            	nbJoursWeekend = date.isLeapYear() ? 106 : 105;
             	break;
             case SUNDAY:
-            	if(!date.isLeapYear()) {
-            		nbJoursWeekend =  nbJoursWeekend + 1;
-            	}
+            	nbJoursWeekend = date.isLeapYear() ? 104 : 105;
             	break;
+            default:
+            	nbJoursWeekend = 104;
         }
         
         // Si la date demandée est inférieure à l'année en cours, on ne peut trouver les jours fériés dans la liste
